@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 //hash password imports
 const bcrypt = require('bcrypt');
 const SALT_I = 10;
