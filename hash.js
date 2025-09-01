@@ -1,8 +1,6 @@
 const bcrypt = require('bcrypt');
-//import (crypto-js) to setup the token
-const {MD5} = require('crypto-js');
-//import (jsonwebtoken) to setup
-const jwt = require('jsonwebtoken');
+const {MD5} = require('crypto-js'); //import (crypto-js) to setup the token
+const jwt = require('jsonwebtoken'); //import (jsonwebtoken) to setup
 
 
 // bcrypt.genSalt(10,(err,salt)=>{

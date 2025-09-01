@@ -6,9 +6,6 @@ const app = express();
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/auth');
 
-//exported file from user.js
-// const {User} = require('./models/user');
-
 app.use(bodyPaser.json());
 
 

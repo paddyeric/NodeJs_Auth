@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-//hash password imports
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'); //import (bcrypt) to hash passwords
 const SALT_I = 10;
 
 
@@ -18,7 +17,7 @@ const userSchema = mongoose.Schema({
     }
 })
 
-// //hash password functions
+//hash password function
 userSchema.pre('save',function(next){
     var user = this; 
 
@@ -31,7 +30,16 @@ userSchema.pre('save',function(next){
             next();
         })
     })
-})
+}) 
+
+//function to compare if the password matches or not
+userSchema.methods.comparePassword = function(candidatePassword, cb){
+
+    bcrypt.compare(candidatePassword,this.password,function(err,isMatch){
+            if(err) throw cb(err);
+            cb(null,isMatch)
+        })
+}
 
 
 
