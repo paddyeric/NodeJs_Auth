@@ -24,7 +24,7 @@ app.post('/api/user',(req,res)=>{
 })
 
 
- //function to find or compare email and password in the database to check if it matches or not
+ //function to find or compare email, password and generate token in the database to check if it matches or not
 app.post('/api/user/login',(req, res)=>{
 
     User.findOne({'email':req.body.email},(err,user)=>{
@@ -36,10 +36,13 @@ app.post('/api/user/login',(req, res)=>{
                 message:'wrong password'
             });
 
-            res.status(200).send(isMatch);
+            user.generateToken((err,user)=>{
+                if(err) return res.status(400).send(err);
+                res.cookie('auth',user.token).send('ok')
+            })
         })
     })
-})
+});
 
 
 

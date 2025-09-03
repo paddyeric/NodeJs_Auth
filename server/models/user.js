@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt'); //import (bcrypt) to hash passwords
+const jwt = require('jsonwebtoken'); //import (jsonwebtoken) to create a token
 const SALT_I = 10;
 
 
@@ -14,6 +15,9 @@ const userSchema = mongoose.Schema({
         type: String,
         require: true,
         minlength: 6,
+    },
+    token:{
+        type:String
     }
 })
 
@@ -39,6 +43,17 @@ userSchema.methods.comparePassword = function(candidatePassword, cb){
             if(err) throw cb(err);
             cb(null,isMatch)
         })
+}
+
+userSchema.methods.generateToken = function(cb){
+    var user = this;
+    var token = jwt.sign(user._id.toHexString(), 'supersecret');
+
+    user.token = token;
+    user.save(function(err,user){
+        if(err) return cb(err);
+        cb(null,user)
+    })
 }
 
 
